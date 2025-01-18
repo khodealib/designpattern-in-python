@@ -5,16 +5,25 @@
 """
 
 
-class Singleton(type):
+class SingletonMeta(type):
+    """
+    The Singleton class can be implemented in different ways in Python. Some
+    possible variations include: base class, decorator, metaclass. We will use the
+    metaclass because it is best suited for this purpose.
+    """
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
+        """
+        Possible changes to the value of the `__init__` argument do not
+        affect the returned instance.
+        """
         if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+            cls._instances[cls] = super(SingletonMeta, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
 
 
-class Logger(metaclass=Singleton):
+class Logger(metaclass=SingletonMeta):
     @staticmethod
     def log(msg):
         print(msg)
