@@ -1,7 +1,7 @@
 """
-    Singleton:
-        - Ensure that a class has only one instance and provide a global point of access to it.
-        - Thread unsafe
+Singleton:
+    - Ensure that a class has only one instance and provide a global point of access to it.
+    - Thread unsafe
 """
 
 
@@ -11,6 +11,7 @@ class SingletonMeta(type):
     possible variations include: base class, decorator, metaclass. We will use the
     metaclass because it is best suited for this purpose.
     """
+
     _instances = {}
 
     def __call__(cls, *args, **kwargs):

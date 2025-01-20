@@ -11,6 +11,7 @@ Main Difference with Factory Pattern:
     The main goal of the Factory Pattern is to create objects while hiding the complexity
     of the creation process. It is suitable when object creation does not need to be customizable.
 """
+
 import dataclasses
 from typing import Optional, Dict
 
@@ -21,12 +22,6 @@ class Request:
     endpoint: str
     headers: Dict[str, str]
     payload: Dict[str, str]
-
-    def __str__(self):
-        return f"Request(method={self.method}, endpoint={self.endpoint}, headers={self.headers}, payload={self.payload})"
-
-    def __repr__(self):
-        return str(self)
 
 
 class RequestBuilder:
@@ -72,11 +67,7 @@ if __name__ == "__main__":
     builder = RequestBuilder()
 
     # Example 1: GET request
-    req1 = (
-        builder.set_method("GET")
-        .set_endpoint("http://google.com")
-        .build()
-    )
+    req1 = builder.set_method("GET").set_endpoint("http://google.com").build()
 
     # Example 2: POST request with headers and payload
     req2 = (
