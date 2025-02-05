@@ -16,7 +16,7 @@ This repository contains examples of various design patterns implemented in Pyth
 1. [Singleton](./creational/singleton/)
 2. [Factory Method]()
 3. [Abstract Factory]()
-4. [Builder]()
+4. [Builder](./creational/builder/)
 5. [Prototype]()
 
 ## Structural Patterns
