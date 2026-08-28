@@ -1,81 +1,30 @@
-# Builder Pattern in Python
+# Builder Pattern
 
-The Builder Pattern is a creational design pattern that allows for the step-by-step creation of complex objects. It separates the construction of a complex object from its representation, allowing the same construction process to create various representations.
+Separate construction of a complex object from its representation.
 
-## Structure
+## When to Use
 
-1. **Builder**: Specifies an abstract interface for creating parts of a Product object.
-2. **ConcreteBuilder**: Constructs and assembles parts of the product by implementing the Builder interface. It defines and keeps track of the representation it creates and provides an interface for retrieving the product.
-3. **Director**: Constructs an object using the Builder interface.
-4. **Product**: Represents the complex object under construction.
+- Object has many optional/configurable parameters
+- Construction involves multiple steps that must be ordered
+- Need different representations from same construction process
+- Immutable objects with many fields (fluent builder)
 
-## Example
+## When to Avoid
 
-Here is an example of the Builder Pattern in Python:
+- Simple objects with few required fields — just use `__init__` or dataclass
+- Single representation, no step-by-step logic — factory is simpler
+- Performance-critical hot paths — builder adds indirection
 
-```python
-class Product:
-    def __init__(self):
-        self.parts = []
+## Implementations
 
-    def add(self, part):
-        self.parts.append(part)
+| File | Style | Best For |
+|------|-------|----------|
+| `builder.py` | Classic GoF (Director + Abstract Builder) | Multiple product types, same construction algorithm |
+| `example.py` | Fluent Builder (method chaining) | Single product, many optional fields, readable DSL |
 
-    def show(self):
-        print("Product Parts: ", self.parts)
+## Run
 
-class Builder:
-    def build_part_a(self):
-        pass
-
-    def build_part_b(self):
-        pass
-
-    def get_result(self):
-        pass
-
-class ConcreteBuilder(Builder):
-    def __init__(self):
-        self.product = Product()
-
-    def build_part_a(self):
-        self.product.add("PartA")
-
-    def build_part_b(self):
-        self.product.add("PartB")
-
-    def get_result(self):
-        return self.product
-
-class Director:
-    def __init__(self, builder):
-        self.builder = builder
-
-    def construct(self):
-        self.builder.build_part_a()
-        self.builder.build_part_b()
-
-# Usage
-builder = ConcreteBuilder()
-director = Director(builder)
-director.construct()
-product = builder.get_result()
-product.show()
+```bash
+python -m creational.builder.builder
+python -m creational.builder.example
 ```
-
-## Advantages
-
-- **Separation of Concerns**: The pattern separates the construction of a complex object from its representation.
-- **Flexibility**: It allows for different representations of a constructed object.
-- **Reusability**: The same construction process can be reused to create different products.
-
-## Use Cases
-
-- When the construction process of an object is complex.
-- When you need to create different representations of a product.
-- When the construction algorithm should be independent of the parts that make up the object and how they are assembled.
-
-## References
-
-- [Builder Pattern - Wikipedia](https://en.wikipedia.org/wiki/Builder_pattern)
-- [Builder Pattern - Refactoring Guru](https://refactoring.guru/design-patterns/builder)

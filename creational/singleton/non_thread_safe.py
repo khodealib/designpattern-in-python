@@ -1,32 +1,24 @@
-"""
-Singleton:
-    - Ensure that a class has only one instance and provide a global point of access to it.
-    - Thread unsafe
-"""
+"""Non-thread-safe Singleton implementation using metaclass."""
+
+from typing import Any
 
 
 class SingletonMeta(type):
-    """
-    The Singleton class can be implemented in different ways in Python. Some
-    possible variations include: base class, decorator, metaclass. We will use the
-    metaclass because it is best suited for this purpose.
-    """
+    """Metaclass that ensures only one instance per class exists (not thread-safe)."""
 
-    _instance = None
+    _instances: dict[type, Any] = {}
 
-    def __call__(cls, *args, **kwargs):
-        """
-        Possible changes to the value of the `__init__` argument do not
-        affect the returned instance.
-        """
+    def __call__(cls, *args: Any, **kwargs: Any) -> Any:
         if cls not in cls._instances:
-            cls._instance = super(SingletonMeta, cls).__call__(*args, **kwargs)
-        return cls._instance
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
 
 
 class Logger(metaclass=SingletonMeta):
+    """Simple logger singleton."""
+
     @staticmethod
-    def log(msg):
+    def log(msg: str) -> None:
         print(msg)
 
 
@@ -36,5 +28,5 @@ if __name__ == "__main__":
     logger1.log("Hello")
     logger2.log("World")
 
-    print("That's the same instance?")
+    print("Same instance?")
     print(logger1 is logger2)
